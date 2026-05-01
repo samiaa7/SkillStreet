@@ -1,4 +1,4 @@
--- View 1: All open sessions with teacher name and skill details
+-- view to see all open sessions with teacher name and skill details
 CREATE VIEW open_sessions_view AS
 SELECT
     s.session_id,
@@ -18,7 +18,7 @@ JOIN users u  ON s.host_user_id = u.user_id
 JOIN skill sk ON s.skill_id = sk.skill_id
 WHERE s.status = 'open';
 
--- View 2: Completed bookings with learner, teacher, and review info
+-- view to see all completed bookings with learner, teacher, and review info
 CREATE VIEW completed_bookings_view AS
 SELECT
     b.booking_id,
