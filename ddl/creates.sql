@@ -1,4 +1,3 @@
--- 1. SKILL (no foreign keys)
 CREATE TABLE skill (
     skill_id    SERIAL PRIMARY KEY,
     category    VARCHAR(100) NOT NULL,
@@ -6,7 +5,6 @@ CREATE TABLE skill (
     description TEXT
 );
 
--- 2. USER (no foreign keys)
 CREATE TABLE users (
     user_id       SERIAL PRIMARY KEY,
     full_name     VARCHAR(150) NOT NULL,
@@ -21,7 +19,6 @@ CREATE TABLE users (
     created_at    TIMESTAMP    DEFAULT CURRENT_TIMESTAMP
 );
 
--- 3. USER_SKILL (depends on USER + SKILL)
 CREATE TABLE user_skill (
     user_skill_id SERIAL PRIMARY KEY,
     user_id       INT NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
@@ -31,7 +28,6 @@ CREATE TABLE user_skill (
     UNIQUE (user_id, skill_id)
 );
 
--- 4. SESSION (depends on USER + SKILL)
 CREATE TABLE session (
     session_id   SERIAL PRIMARY KEY,
     host_user_id INT NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
@@ -48,7 +44,6 @@ CREATE TABLE session (
     created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- 5. BOOKING (depends on SESSION + USER)
 CREATE TABLE booking (
     booking_id  SERIAL PRIMARY KEY,
     session_id  INT NOT NULL REFERENCES session(session_id) ON DELETE CASCADE,
@@ -60,7 +55,6 @@ CREATE TABLE booking (
     UNIQUE (session_id, learner_id)
 );
 
--- 6. REVIEW (depends on BOOKING + USER)
 CREATE TABLE review (
     review_id   SERIAL PRIMARY KEY,
     booking_id  INT NOT NULL UNIQUE REFERENCES booking(booking_id) ON DELETE CASCADE,
@@ -71,7 +65,6 @@ CREATE TABLE review (
     created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- 7. MESSAGE (depends on BOOKING + USER)
 CREATE TABLE message (
     message_id  SERIAL PRIMARY KEY,
     booking_id  INT NOT NULL REFERENCES booking(booking_id) ON DELETE CASCADE,
@@ -82,7 +75,6 @@ CREATE TABLE message (
     sent_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- 8. COMMUNITY_POST (depends on USER)
 CREATE TABLE community_post (
     post_id      SERIAL PRIMARY KEY,
     user_id      INT NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
